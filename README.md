@@ -157,3 +157,7 @@ e.g. to run build in Release mode, use `node build.js --release` (or `-r`).
 
 ### NPM
 NPM is being run with `npm install` if there is `package.json` in the root folder. You can force disable NPM by adding `"npm": false` in `CONFIG`.
+
+### How to build (this build system 😁)
+- Run `tsc`
+You need TSC to be installed in your environment.
