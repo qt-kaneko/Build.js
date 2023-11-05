@@ -21,7 +21,7 @@ async function main()
 
     if (fs.existsSync(`package.json`))
     {
-      CONFIG.npm = true;
+      CONFIG.npm ??= true;
       CONFIG.package = JSON.parse(fs.readFileSync(`package.json`).toString());
     }
 
@@ -34,7 +34,7 @@ async function main()
 
     if (fs.existsSync(`tsconfig.json`))
     {
-      CONFIG.typescript = true;
+      CONFIG.typescript ??= true;
       CONFIG.tsconfig = JSON.parse(fs.readFileSync(`tsconfig.json`).toString());
     }
 
