@@ -160,4 +160,5 @@ NPM is being run with `npm install` if there is `package.json` in the root folde
 
 ### How to build (this build system 😁)
 - Run `tsc`
+
 You need TSC to be installed in your environment.
