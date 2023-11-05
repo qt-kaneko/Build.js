@@ -6,14 +6,14 @@
 3) Restore NPM packages
 4) Replace strings in files after build
 
-### How to use:
+### How to use
 1) Download [latest release](./releases/latest).
 2) Place it in your project folder.
 3) Prepend content in it with [`CONFIG`](#config).
 4) Run script using `node build.js`.
 5) You are done!
 
-### `CONFIG`:
+### CONFIG
 `CONFIG` constant is used to configure your build and keep all in single build.js file.
 It contains:
 - [Resources](#resources) - strings you want to replace in your distribution.
@@ -81,7 +81,7 @@ You can also replace `$(THING)` with specified file content. Use `file://` forma
 ```
 Will replace all `$(TEXT)` with `text.txt` content.
 
-### Includes:
+### Includes
 You can include files using
 ```json
 {
@@ -133,7 +133,7 @@ or
 ```
 This will include files for selected build configuration renaming and copying them into directory you specified.
 
-### TypeScript:
+### TypeScript
 There are two compiling modes: Release and Debug.
 - Debug mode is used by default.
 To build in Release mode add --release or -r flag when running script.
@@ -141,5 +141,5 @@ To build in Release mode add --release or -r flag when running script.
 
 e.g. to run build in Release mode, use `node build.js --release` (or `-r`).
 
-### NPM:
+### NPM
 NPM is being run with `npm install` if there is `package.json` in the root folder. You can force disable NPM by adding `"npm": false` in `CONFIG`.
