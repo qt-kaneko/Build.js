@@ -15,6 +15,7 @@
 
 ### CONFIG
 `CONFIG` constant is used to configure your build and keep everything in the single `build.js` file.
+
 It contains:
 - [Resources](#resources) - strings you want to replace in your distribution.
 - `"destination": "your folder where distribution is placed"`
