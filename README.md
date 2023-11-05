@@ -7,7 +7,7 @@
 4) Replace strings in files after build
 
 ### How to use
-1) Download [latest release](./releases/latest).
+1) Download [latest release](/releases/latest).
 2) Place it in your project folder.
 3) Prepend content in it with [`CONFIG`](#config).
 4) Run script using `node build.js`.
