@@ -54,6 +54,8 @@ const CONFIG = {
   // "npm": false
   // "typescript": false
 };
+
+// The rest of build.js
 ```
 </details>
 
