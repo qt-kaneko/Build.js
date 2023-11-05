@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "disableReferencedProjectLoad": true,
+
+    "allowJs": true,
+    "target": "ESNext",
+    "lib": ["ESNext"],
+    "skipLibCheck": true,
+
+    "outDir": "dist",
+    "outFile": "dist/build.js",
+    "removeComments": true,
+    "incremental": true,
+    "sourceMap": false
+  },
+  "include": ["src"]
+}

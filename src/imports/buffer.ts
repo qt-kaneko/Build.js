@@ -1,0 +1,1 @@
+const buffer: typeof import("buffer") = require("buffer");

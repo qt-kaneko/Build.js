@@ -1,0 +1,1 @@
+const cp: typeof import("child_process") = require("child_process");

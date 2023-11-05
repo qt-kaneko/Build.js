@@ -1,0 +1,1 @@
+const fsp: typeof import("fs/promises") = require("fs/promises");
