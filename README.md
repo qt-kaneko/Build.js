@@ -116,7 +116,7 @@ or
   }
 }
 ```
-This will include files for selected build configuration.
+This will include files for selected [build configuration](#build-configurations).
 
 or
 ```json
@@ -132,7 +132,20 @@ or
   }
 }
 ```
-This will include files for selected build configuration renaming and copying them into directory you specified.
+This will include files for selected [build configuration](#build-configurations) renaming and copying them into directory you specified.
+
+### Build configurations
+As mentioned before, configurations are used for includes (and maybe will be used for more in the future 😜).
+
+You can run build using configuration specifying it in args, like:
+
+`node build.js configuration1`
+
+Also to run build using configuration in release use:
+
+`node build.js configuration1 --release`
+
+You can read more about release in [TypeScript](#typescript) section.
 
 ### TypeScript
 There are two compiling modes: Release and Debug.
