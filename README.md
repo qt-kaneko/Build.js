@@ -21,7 +21,7 @@ It contains:
 - [Resources](#resources) - strings you want to replace in your distribution.
 - `"destination": "your folder where distribution is placed"`
 - [Includes](#includes) - files you want to include in your distribution.
-- [Fancy stuff](#fancy-stuff) - Flags if you wnat to force change some auto settings.
+- [Fancy stuff](#fancy-stuff) - Flags if you want to force change some auto settings.
 <details>
 <summary> Example CONFIG </summary>
 
