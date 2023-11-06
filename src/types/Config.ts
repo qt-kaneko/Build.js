@@ -9,7 +9,8 @@ interface Config
   options?: string[];
   parameters?: string[];
   configuration?: string;
-  typescript: boolean;
+  typescript?: boolean;
+  main?: boolean;
   tsconfig?: {[k: string]: any};
   release?: boolean;
   buildArtifacts?: string[];

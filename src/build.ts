@@ -48,17 +48,19 @@ async function build(config: Config)
   }
 
   let outFile = <string|null>config.tsconfig![`compilerOptions`]?.[`outFile`];
-  if (config.typescript && outFile != null)
+  if (config.main && config.typescript && outFile != null)
   {
+    const mainInvoke = `\nif (typeof main === "function") main(); // Build.js auto-generated`;
+
     let content = await fsp.readFile(outFile);
     let contentString = content.toString();
 
-    if (!contentString.includes(`main?.(); // Build.js auto-generated`))
+    if (!contentString.includes(mainInvoke))
     {
       // TODO: Maybe place main?.(); before source map url
       // let sourceMap = contentString.indexOf(`//# sourceMappingURL=`);
 
-      contentString += `\nmain?.(); // Build.js auto-generated`;
+      contentString += mainInvoke;
 
       await fsp.writeFile(outFile, contentString);
     }

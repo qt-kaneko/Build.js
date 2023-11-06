@@ -24,6 +24,7 @@ async function main()
       CONFIG.npm ??= true;
       CONFIG.package = JSON.parse(fs.readFileSync(`package.json`).toString());
     }
+    else CONFIG.npm = false;
 
     let args = process.argv.slice(2);
     CONFIG.options = args.filter(arg => !arg.startsWith(`-`));
@@ -37,6 +38,9 @@ async function main()
       CONFIG.typescript ??= true;
       CONFIG.tsconfig = JSON.parse(fs.readFileSync(`tsconfig.json`).toString());
     }
+    else CONFIG.typescript = false;
+
+    CONFIG.main ??= true;
 
     console.log(`Building`
                 + (CONFIG.configuration != null ? ` configuration '${CONFIG.configuration}'`
