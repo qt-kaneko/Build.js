@@ -1,10 +1,11 @@
 ## Really smol build system.
 
 ### It can:
-1) Include specified files or folders (+ rename them if you want to)
-2) Run your TypeScript compiler
-3) Restore NPM packages
-4) Replace strings in files after build
+1) Include specified files or folders (+ rename them if you want to).
+2) Run your TypeScript compiler.
+3) Restore NPM packages.
+4) Replace strings in files after build.
+5) Add `main` call in your single file build.
 
 ### How to use
 1) Download [latest release](https://github.com/qt-kaneko/Build.js/releases/latest).
@@ -20,6 +21,7 @@ It contains:
 - [Resources](#resources) - strings you want to replace in your distribution.
 - `"destination": "your folder where distribution is placed"`
 - [Includes](#includes) - files you want to include in your distribution.
+- [Fancy stuff](#fancy-stuff) - Flags if you wnat to force change some auto settings.
 <details>
 <summary> Example CONFIG </summary>
 
@@ -157,6 +159,16 @@ e.g. to run build in Release mode, use `node build.js --release` (or `-r`).
 
 ### NPM
 NPM is being run with `npm install` if there is `package.json` in the root folder. You can force disable NPM by adding `"npm": false` in `CONFIG`.
+
+### Main
+This script will automatically add main function call to the end of your single-file (outFile) build.
+
+See [fancy stuff](#fancy-stuff) to disable this.
+
+### Fancy stuff
+- `"typescript": false` - force-disable typescript.
+- `"npm": false` - force-disable npm.
+- `"main": false` - force-disable `main` call generation.
 
 ### How to build (this build system 😁)
 - Run `tsc`
