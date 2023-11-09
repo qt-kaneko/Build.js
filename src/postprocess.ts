@@ -24,9 +24,18 @@ async function postprocess(config: Config)
       for (let [key, value] of Object.entries(config.resources))
       {
         let target = `$(` + key.toUpperCase() + `)`;
-        let replacement = value.startsWith(`file://`)
-                        ? (await fsp.readFile(value.slice(`file://`.length))).toString()
-                        : value;
+        let replacement: string;
+
+        const filePrefix = `file://`;
+        if (value.startsWith(filePrefix))
+        {
+          let filePath = value.slice(filePrefix.length);
+          let fileReplacement = await fsp.readFile(filePath);
+          replacement = buffer.isUtf8(fileReplacement)
+                      ? fileReplacement.toString()
+                      : fileReplacement.toString(`base64`);
+        }
+        else replacement = value;
 
         if (!replaced && contentString.includes(target)) anyReplaced = replaced = true;
         contentString = contentString.replaceAll(target, replacement);
