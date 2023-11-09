@@ -84,6 +84,8 @@ You can also replace `$(THING)` with specified file content. Use `file://` forma
 ```
 Will replace all `$(TEXT)` with `text.txt` content.
 
+> If file is binary then `$(THING)` will be replaced with `base64` encoded content.
+
 ### Includes
 You can include files using
 ```json
