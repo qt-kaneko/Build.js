@@ -16,7 +16,7 @@ async function build(config: Config)
   if (includes.length === 0) console.log(`  Nothing to include ¯\\_(ツ)_/¯`);
   else
   {
-    console.log(`  Copying includes -> ${config.destination}`);
+    tasks.push((async () => console.log(`  Copying includes -> ${config.destination}`))());
     tasks.push(...includes.map(include => {
       let source: string;
       let destination: string;
@@ -28,43 +28,47 @@ async function build(config: Config)
   }
 
   // Compile
-  if (config.typescript)
+  if (config.typescript && !config.esbuild)
   {
-    console.log(`  Compiling...`);
-    tasks.push(
-      spawnAsync(`tsc`, [`--build`, (config.release ? `tsconfig.release.json` : `tsconfig.json`)], {stdio: `inherit`})
-        .then(exitCode => exitCode !== 0 ? Promise.reject() : Promise.resolve())
-    );
+    tasks.push((async () => {
+      console.log(`  Compiling...`);
+
+      let command = `tsc`;
+      let options = [
+        `--project`, (config.release && config.tsconfigRelease) ? `tsconfig.release.json` : `tsconfig.json`,
+        `--outDir`, config.destination
+      ];
+
+      await spawnAsync(command, options, {stdio: `inherit`}).then(
+        exitCode => exitCode !== 0 ? Promise.reject() : Promise.resolve()
+      );
+    })());
   }
 
-  try {await Promise.all(tasks)}
-  catch (e)
+  // Bundle
+  if (config.esbuild)
   {
-    if (e instanceof Error)
-    {
-      throw new BuildError(e.message);
-    }
-    else throw e;
+    tasks.push((async () => {
+      console.log(`  Bundling...`);
+
+      let command = `esbuild`;
+      let options = [
+        config.esbuild!.entry,
+        `--bundle`,
+        `--outfile=${config.destination}/${config.esbuild!.outFile}`,
+        `--log-level=warning`
+      ];
+      if (config.release && config.tsconfigRelease) options.push(`--tsconfig=tsconfig.release.json`);
+      if (!config.release && config.tsconfig) options.push(`--tsconfig=tsconfig.json`);
+      if (!config.release) options.push(`--sourcemap`);
+
+      await spawnAsync(command, options, {stdio: `inherit`}).then(
+        exitCode => exitCode !== 0 ? Promise.reject() : Promise.resolve()
+      );
+    })());
   }
 
-  let outFile = <string|null>config.tsconfig![`compilerOptions`]?.[`outFile`];
-  if (config.main && config.typescript && outFile != null)
-  {
-    const mainInvoke = `\nif (typeof main === "function") main(); // Build.js auto-generated`;
-
-    let content = await fsp.readFile(outFile);
-    let contentString = content.toString();
-
-    if (!contentString.includes(mainInvoke))
-    {
-      // TODO: Maybe place main?.(); before source map url
-      // let sourceMap = contentString.indexOf(`//# sourceMappingURL=`);
-
-      contentString += mainInvoke;
-
-      await fsp.writeFile(outFile, contentString);
-    }
-  }
+  await Promise.all(tasks);
 
   if (tasks.length > 0)
   {

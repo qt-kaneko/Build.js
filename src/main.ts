@@ -9,7 +9,7 @@ async function main()
 
   try
   {
-    if (CONFIG == null) throw new BuildError(`Build config is not defined.`);
+    if (typeof CONFIG === `undefined`) throw new BuildError(`Build config is not defined.`);
     CONFIG.destination ??= ``;
     CONFIG.includes ??= [];
     CONFIG.resources ??= {};
@@ -19,28 +19,31 @@ async function main()
       throw new BuildError(`'build.js' was not found in working directory, are you running in correct folder?`);
     }
 
+    let args = process.argv.slice(2);
+    CONFIG.options = args.filter(arg => !arg.startsWith(`-`));
+    CONFIG.parameters = args.filter(arg => arg.startsWith(`-`));
+
+    CONFIG.configuration ??= CONFIG.options.at(0);
+    CONFIG.release ??= CONFIG.parameters.includes(`--release`);
+
     if (fs.existsSync(`package.json`))
     {
       CONFIG.npm ??= true;
       CONFIG.package = JSON.parse(fs.readFileSync(`package.json`).toString());
     }
-    else CONFIG.npm = false;
-
-    let args = process.argv.slice(2);
-    CONFIG.options = args.filter(arg => !arg.startsWith(`-`));
-    CONFIG.parameters = args.filter(arg => arg.startsWith(`-`));
-
-    CONFIG.configuration = CONFIG.options.at(0);
-    CONFIG.release = CONFIG.parameters.includes(`--release`);
+    else CONFIG.npm ??= false;
 
     if (fs.existsSync(`tsconfig.json`))
     {
       CONFIG.typescript ??= true;
       CONFIG.tsconfig = JSON.parse(fs.readFileSync(`tsconfig.json`).toString());
-    }
-    else CONFIG.typescript = false;
 
-    CONFIG.main ??= true;
+      if (fs.existsSync(`tsconfig.release.json`))
+      {
+        CONFIG.tsconfigRelease = JSON.parse(fs.readFileSync(`tsconfig.release.json`).toString());
+      }
+    }
+    else CONFIG.typescript ??= false;
 
     console.log(`Building`
                 + (CONFIG.configuration != null ? ` configuration '${CONFIG.configuration}'`
@@ -56,25 +59,21 @@ async function main()
     console.log();
     console.log(`\x1B[32mBuild succeeded.\x1B[0m`);
   }
-  catch (e)
+  catch (e: any)
   {
-    if (e instanceof BuildError)
+    if (`message` in e)
     {
-      if (e.message !== ``)
-      {
-        console.log();
-        console.log(`\x1B[91mError: ${e.message}\x1B[0m`);
-      }
-
       console.log();
-      console.log(`\x1B[91mBuild FAILED.\x1B[0m`);
-
-      process.exitCode = -1;
+      console.log(`\x1B[91mError: ${e.message}\x1B[0m`);
     }
-    else throw e;
+
+    console.log();
+    console.log(`\x1B[91mBuild FAILED.\x1B[0m`);
+
+    process.exitCode = -1;
   }
 
   console.log();
   console.timeEnd(`Elapsed`);
 }
-main();
+main().catch(reason => {throw reason});

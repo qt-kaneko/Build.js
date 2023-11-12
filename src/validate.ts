@@ -19,6 +19,19 @@ async function validate(config: Config)
                          `Remove '${config.destination}' manually if you are sure that this is correct behaviour.`);
   }
 
+  if (config.esbuild)
+  {
+    if (config.esbuild.entry == null)
+    {
+      throw new BuildError(`Entry point was not provided for ESBuild.`);
+    }
+
+    if (config.esbuild.outFile == null)
+    {
+      throw new BuildError(`Out file path was not provided for ESBuild.`);
+    }
+  }
+
   if (!(config.includes instanceof Array))
   {
     let configurations = Object.keys(config.includes);

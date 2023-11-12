@@ -6,12 +6,19 @@ interface Config
 
   npm?: boolean;
   package?: {[k: string]: any};
+
+  typescript?: boolean;
+  tsconfig?: {[k: string]: any};
+  tsconfigRelease?: {[k: string]: any};
+
+  esbuild?: {
+    entry: string;
+    outFile?: string;
+  };
+
   options?: string[];
   parameters?: string[];
   configuration?: string;
-  typescript?: boolean;
-  main?: boolean;
-  tsconfig?: {[k: string]: any};
   release?: boolean;
   buildArtifacts?: string[];
 }

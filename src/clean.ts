@@ -9,11 +9,14 @@ async function clean(config: Config)
   if (!config.release) return; // Clean only in Release
 
   // Remove typescript build cache (like .tsbuildinfo)
-  if (config.typescript)
+  if (config.typescript && !config.esbuild)
   {
-    tasks.push(
-      spawnAsync(`tsc`, [`--build`, `--clean`, `tsconfig.json`], {stdio: `inherit`}),
-      spawnAsync(`tsc`, [`--build`, `--clean`, `tsconfig.release.json`], {stdio: `inherit`}),
+    if (config.tsconfig) tasks.push(
+      spawnAsync(`tsc`, [`--build`, `--clean`, `tsconfig.json`], {stdio: `inherit`})
+    );
+
+    if (config.tsconfigRelease) tasks.push(
+      spawnAsync(`tsc`, [`--build`, `--clean`, `tsconfig.release.json`], {stdio: `inherit`})
     );
   }
 
@@ -23,13 +26,5 @@ async function clean(config: Config)
   );
 
   console.log(`  Cleaning...`);
-  try {await Promise.all(tasks)}
-  catch (e)
-  {
-    if (e instanceof Error)
-    {
-      throw new BuildError(e.message);
-    }
-    else throw e;
-  }
+  await Promise.all(tasks);
 }

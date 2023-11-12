@@ -30,6 +30,8 @@ async function postprocess(config: Config)
         if (value.startsWith(filePrefix))
         {
           let filePath = value.slice(filePrefix.length);
+          if (!fs.existsSync(filePath)) continue;
+
           let fileReplacement = await fsp.readFile(filePath);
           replacement = buffer.isUtf8(fileReplacement)
                       ? fileReplacement.toString()
