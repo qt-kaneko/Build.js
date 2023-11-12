@@ -61,7 +61,7 @@ async function main()
   }
   catch (e: any)
   {
-    if (`message` in e)
+    if (`message` in (e ?? {}))
     {
       console.log();
       console.log(`\x1B[91mError: ${e.message}\x1B[0m`);

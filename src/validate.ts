@@ -25,11 +25,6 @@ async function validate(config: Config)
     {
       throw new BuildError(`Entry point was not provided for ESBuild.`);
     }
-
-    if (config.esbuild.outFile == null)
-    {
-      throw new BuildError(`Out file path was not provided for ESBuild.`);
-    }
   }
 
   if (!(config.includes instanceof Array))

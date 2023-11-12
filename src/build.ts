@@ -54,10 +54,13 @@ async function build(config: Config)
       let command = `esbuild`;
       let options = [
         config.esbuild!.entry,
-        `--bundle`,
-        `--outfile=${config.destination}/${config.esbuild!.outFile}`,
         `--log-level=warning`
       ];
+      if (config.esbuild?.outFile) options.push(
+        `--bundle`,
+        `--outfile=${config.destination}/${config.esbuild!.outFile}`
+      );
+      if (!config.esbuild?.outFile) options.push(`--outdir=${config.destination}`);
       if (config.release && config.tsconfigRelease) options.push(`--tsconfig=tsconfig.release.json`);
       if (!config.release && config.tsconfig) options.push(`--tsconfig=tsconfig.json`);
       if (!config.release) options.push(`--sourcemap`);
