@@ -161,7 +161,7 @@ e.g. to run build in Release mode, use `node build.js --release` (or `-r`).
 
 ### ESBuild
 Add `esbuild` to your configuration:
-```json
+```js
 {
   "esbuild": {
     "entry": "src/index.ts", // Path to your entry point file
