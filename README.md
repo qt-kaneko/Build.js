@@ -25,7 +25,7 @@ It contains:
 <details>
 <summary> Example CONFIG </summary>
 
-```js
+```jsonc
 const CONFIG = {
   "resources": {
     "version": "1.0.0"
@@ -70,7 +70,7 @@ const CONFIG = {
 
 ### Resources
 You can use resources to replace specified strings in your files:
-```js
+```jsonc
 {
   "resources": {
     "version": "1.0.0"
@@ -81,7 +81,7 @@ Will replace all `$(VERSION)` with `1.0.0` in your distribution files.
 As you can see, replacement format is `$(YOUR_RESOURCE_NAME_UPPERCASE)`.
 
 You can also replace `$(THING)` with specified file content. Use `file://` format to specify file as a content source:
-```js
+```jsonc
 {
   "resources": {
     "text": "file://text.txt"
@@ -94,7 +94,7 @@ Will replace all `$(TEXT)` with `text.txt` content.
 
 ### Includes
 You can include files using
-```js
+```jsonc
 {
   "destination": "dist",
   "includes": ["text.txt", "assets/icon.png"]
@@ -104,7 +104,7 @@ Using this syntax file will be included in destnation folder with path provided 
 
 or
 
-```js
+```jsonc
 {
   "destination": "dist",
   "includes": [
@@ -117,7 +117,7 @@ This will include specified files renaming them and placing in folder you specif
 
 or
 
-```js
+```jsonc
 {
   "destination": "dist",
   "includes": {
@@ -129,7 +129,7 @@ or
 This will include files for selected [build configuration](#build-configurations).
 
 or
-```js
+```jsonc
 {
   "destination": "dist",
   "includes": {
@@ -167,7 +167,7 @@ e.g. to run build in Release mode, use `node build.js --release` (or `-r`).
 
 ### ESBuild
 Add `esbuild` to your configuration:
-```js
+```jsonc
 {
   "esbuild": {
     "entry": "src/index.ts", // Path to your entry point file
