@@ -53,6 +53,12 @@ const CONFIG = {
   //   ]
   // }
 
+  // Maybe ESBuild?
+  // "esbuild": {
+  //   "entry": "src/index.ts",
+  //   "outFile": "index.js"
+  // },
+
   // Also some special flags
   // "npm": false
   // "typescript": false
@@ -64,7 +70,7 @@ const CONFIG = {
 
 ### Resources
 You can use resources to replace specified strings in your files:
-```json
+```js
 {
   "resources": {
     "version": "1.0.0"
@@ -75,7 +81,7 @@ Will replace all `$(VERSION)` with `1.0.0` in your distribution files.
 As you can see, replacement format is `$(YOUR_RESOURCE_NAME_UPPERCASE)`.
 
 You can also replace `$(THING)` with specified file content. Use `file://` format to specify file as a content source:
-```json
+```js
 {
   "resources": {
     "text": "file://text.txt"
@@ -88,7 +94,7 @@ Will replace all `$(TEXT)` with `text.txt` content.
 
 ### Includes
 You can include files using
-```json
+```js
 {
   "destination": "dist",
   "includes": ["text.txt", "assets/icon.png"]
@@ -98,7 +104,7 @@ Using this syntax file will be included in destnation folder with path provided 
 
 or
 
-```json
+```js
 {
   "destination": "dist",
   "includes": [
@@ -111,7 +117,7 @@ This will include specified files renaming them and placing in folder you specif
 
 or
 
-```json
+```js
 {
   "destination": "dist",
   "includes": {
@@ -123,7 +129,7 @@ or
 This will include files for selected [build configuration](#build-configurations).
 
 or
-```json
+```js
 {
   "destination": "dist",
   "includes": {
