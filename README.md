@@ -21,47 +21,48 @@ It contains:
 - [Resources](#resources) - strings you want to replace in your distribution.
 - `"destination": "your folder where distribution is placed"`
 - [Includes](#includes) - files you want to include in your distribution.
+- [ESBuild](#esbuild) - configuration options for ESBuild bundler.
 - [Fancy stuff](#fancy-stuff) - Flags if you want to force change some auto settings.
 <details>
 <summary> Example CONFIG </summary>
 
-```jsonc
+```js
 const CONFIG = {
-  "resources": {
-    "version": "1.0.0"
+  resources: {
+    version: "1.0.0"
   },
 
-  "destination": "dist",
-  "includes": ["text.txt", "assets/icon.png"]
+  destination: "dist",
+  includes: ["text.txt", "assets/icon.png"]
   // Or
-  // "includes": [
+  // includes: [
   //   ["src/text.txt", "text.txt"],
   //   ["assets/icon-128.png", "icon.png"]
   // ]
   // Or
-  // "includes": {
-  //   "configuration1": ["text.txt"],
-  //   "configuration2": ["icon.png"]
+  // includes: {
+  //   configuration1: ["text.txt"],
+  //   configuration2: ["icon.png"]
   // }
   // Or
-  // "includes": {
-  //   "configuration1": [
+  // includes: {
+  //   configuration1: [
   //     ["src/text.txt", "text.txt"]
   //   ],
-  //   "configuration2": [
+  //   configuration2: [
   //     ["assets/icon-128.png", "icon.png"]
   //   ]
   // }
 
   // Maybe ESBuild?
-  // "esbuild": {
-  //   "entry": "src/index.ts",
-  //   "outFile": "index.js"
+  // esbuild: {
+  //   entry: "src/index.ts",
+  //   outFile: "index.js"
   // },
 
   // Also some special flags
-  // "npm": false
-  // "typescript": false
+  // npm: false
+  // typescript: false
 };
 
 // The rest of build.js
@@ -70,10 +71,10 @@ const CONFIG = {
 
 ### Resources
 You can use resources to replace specified strings in your files:
-```jsonc
+```js
 {
-  "resources": {
-    "version": "1.0.0"
+  resources: {
+    version: "1.0.0"
   }
 }
 ```
@@ -81,10 +82,10 @@ Will replace all `$(VERSION)` with `1.0.0` in your distribution files.
 As you can see, replacement format is `$(YOUR_RESOURCE_NAME_UPPERCASE)`.
 
 You can also replace `$(THING)` with specified file content. Use `file://` format to specify file as a content source:
-```jsonc
+```js
 {
-  "resources": {
-    "text": "file://text.txt"
+  resources: {
+    text: "file://text.txt"
   }
 }
 ```
@@ -94,20 +95,20 @@ Will replace all `$(TEXT)` with `text.txt` content.
 
 ### Includes
 You can include files using
-```jsonc
+```js
 {
-  "destination": "dist",
-  "includes": ["text.txt", "assets/icon.png"]
+  destination: "dist",
+  includes: ["text.txt", "assets/icon.png"]
 }
 ```
 Using this syntax file will be included in destnation folder with path provided to file (like `assets/icon.png` will be `dist/assets/icon.png`).
 
 or
 
-```jsonc
+```js
 {
-  "destination": "dist",
-  "includes": [
+  destination: "dist",
+  includes: [
     ["src/text.txt", "text.txt"],
     ["assets/icon-128.png", "icon.png"]
   ]
@@ -117,26 +118,26 @@ This will include specified files renaming them and placing in folder you specif
 
 or
 
-```jsonc
+```js
 {
-  "destination": "dist",
-  "includes": {
-    "configuration1": ["text.txt"],
-    "configuration2": ["icon.png"]
+  destination: "dist",
+  includes: {
+    configuration1: ["text.txt"],
+    configuration2: ["icon.png"]
   }
 }
 ```
 This will include files for selected [build configuration](#build-configurations).
 
 or
-```jsonc
+```js
 {
-  "destination": "dist",
-  "includes": {
-    "configuration1": [
+  destination: "dist",
+  includes: {
+    configuration1: [
       ["src/text.txt", "text.txt"]
     ],
-    "configuration2": [
+    configuration2: [
       ["assets/icon-128.png", "icon.png"]
     ]
   }
@@ -167,23 +168,23 @@ e.g. to run build in Release mode, use `node build.js --release` (or `-r`).
 
 ### ESBuild
 Add `esbuild` to your configuration:
-```jsonc
+```js
 {
-  "esbuild": {
-    "entry": "src/index.ts", // Path to your entry point file
-    "outFile": "index.js" // Path to out file relative to CONFIG.destination
+  esbuild: {
+    entry: "src/index.ts", // Path to your entry point file
+    outFile: "index.js" // Path to out file relative to CONFIG.destination
   }
 }
 ```
 
 ### NPM
-NPM is being run with `npm install` if there is `package.json` in the root folder. You can force disable NPM by adding `"npm": false` in `CONFIG`.
+NPM is being run with `npm install` if there is `package.json` in the root folder. You can force disable NPM by adding `npm: false` in `CONFIG`.
 
 See [fancy stuff](#fancy-stuff) to disable this.
 
 ### Fancy stuff
-- `"typescript": false` - force-disable typescript.
-- `"npm": false` - force-disable npm.
+- `typescript: false` - force-disable typescript.
+- `npm: false` - force-disable npm.
 
 ### How to build (this build system 😁)
 - Run `tsc`
