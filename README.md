@@ -177,8 +177,17 @@ Add `esbuild` to your configuration:
 }
 ```
 
+You can also build with esbuild without bundling by omitting `outFile`:
+```js
+{
+  esbuild: {
+    entry: "src/index.ts", // Path to your entry point file
+  }
+}
+```
+
 ### NPM
-NPM is being run with `npm install` if there is `package.json` in the root folder. You can force disable NPM by adding `npm: false` in `CONFIG`.
+NPM is being run with `npm install` if there is `package.json` in the root folder.
 
 See [fancy stuff](#fancy-stuff) to disable this.
 
